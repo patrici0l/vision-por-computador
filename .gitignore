@@ -2,6 +2,10 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+CLASES/
+clases/
+datos/
 resultados/
+.vscode/
 .env
 .env.*
