@@ -6,6 +6,7 @@ CLASES/
 clases/
 datos/
 resultados/
+images/
 .vscode/
 .env
 .env.*
