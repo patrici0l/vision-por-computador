@@ -1,0 +1,8 @@
+# Dataset público descargado; obtenerlo desde la página oficial de MVTec.
+data/publico/MVTec_D2S/**
+!data/publico/MVTec_D2S/.gitkeep
+# Salidas generadas
+resultados/**
+!resultados/figuras/.gitkeep
+__pycache__/
+*.py[cod]
