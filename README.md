@@ -4,7 +4,7 @@
 
 - `practica1/`: cuaderno y script de la primera práctica, junto con sus nueve imágenes de ejemplo y resultados.
 - `practica2/`: cuaderno de la segunda práctica y logo UPS. Usa imágenes del dataset común del proyecto.
-- `Proyecto Integrador P1/`: proyecto principal. Las 121 imágenes JPEG de trabajo están juntas en `data/propio/originales/`; las fuentes HEIC/JPEG en `data/propio/fuentes_originales/`; los CSV de registro en `metadata/`.
+- `Proyecto Integrador P1/`: proyecto principal. Las 121 imágenes JPEG de trabajo están juntas en `data/propio/imagenes/`; las fuentes HEIC/JPEG en `data/propio/fuentes_heic/`; los CSV de registro en `metadata/`.
 - `CLASES/`: cuadernos del docente y copia local del Grocery Store Dataset usada por la práctica 1.
 - `Material Clases/`: guía y presentaciones de las unidades.
 - `.venv/`: entorno Python del espacio de trabajo.
@@ -26,7 +26,7 @@ El notebook sigue las secciones de la rúbrica: planteamiento del problema, requ
 
 Para el análisis público se requiere la copia local de Grocery Store Dataset en `CLASES/datos/GroceryStoreDataset/dataset` o `practica1/datos/GroceryStoreDataset/dataset`, con sus imágenes, `classes.csv` y los manifiestos `train.txt`, `val.txt` y `test.txt`. Esta carpeta está excluida de Git: al compartir el proyecto hay que proporcionar también el dataset. El notebook conserva los originales y exporta las incidencias y duplicados exactos encontrados.
 
-Instala las dependencias con `python -m pip install -r requirements.txt`. El cuaderno comienza con `miloFront.jpeg` y segmentación verde.
+Instala las dependencias con `python -m pip install -r requirements.txt`. El cuaderno comienza con `producto_cereal_milo_02.jpeg` y segmentación verde.
 
 Para procesar todas las fotografías mediante el script:
 
