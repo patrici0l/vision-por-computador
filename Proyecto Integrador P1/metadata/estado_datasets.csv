@@ -1,3 +1,3 @@
-﻿dataset,rol,estado,anotaciones,observaciones
-Propio,Estantes y productos objetivo,En curso,"Sin cajas ni máscaras","9 fotos únicas copiadas; 2 clases provisionales; faltan datos de captura y escenas de estante/video"
-MVTec D2S,Público para segmentación,Por solicitar,"Máscaras por píxel","Solicita completar formulario en MVTec; revisar particiones descargadas y licencia CC BY-NC-SA 4.0"
+dataset,rol,estado,anotaciones,observaciones
+Propio,Estantes y productos objetivo,En curso,Sin cajas ni máscaras,50 fotografías individuales en 11 clases provisionales y 71 escenas multiclase; imágenes juntas en data/propio/originales; fuentes juntas en data/propio/fuentes_originales; sin cajas ni máscaras.
+MVTec D2S,Público para segmentación,Por solicitar,Máscaras por píxel,Solicita completar formulario en MVTec; revisar particiones descargadas y licencia CC BY-NC-SA 4.0

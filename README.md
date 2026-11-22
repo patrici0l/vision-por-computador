@@ -1,10 +1,22 @@
-# Práctica 1: Adquisición y representación de imágenes de productos
+# Visión por Computador — guía del espacio de trabajo
+
+## Mapa de carpetas
+
+- `practica1/`: cuaderno y script de la primera práctica, junto con sus nueve imágenes de ejemplo y resultados.
+- `practica2/`: cuaderno de la segunda práctica y logo UPS. Usa imágenes del dataset común del proyecto.
+- `Proyecto Integrador P1/`: proyecto principal. Las 121 imágenes JPEG de trabajo están juntas en `data/propio/originales/`; las fuentes HEIC/JPEG en `data/propio/fuentes_originales/`; los CSV de registro en `metadata/`.
+- `CLASES/`: cuadernos del docente y copia local del Grocery Store Dataset usada por la práctica 1.
+- `Material Clases/`: guía y presentaciones de las unidades.
+- `.venv/`: entorno Python del espacio de trabajo.
+- Los resultados de cada práctica se guardan dentro de su carpeta `resultados/`.
+
+## Práctica 1: adquisición y representación de imágenes de productos
 
 Objetivo: analizar fotografías propias de productos de supermercado o ferretería mediante su resolución, profundidad de color, representaciones, histogramas y segmentación por color en HSV.
 
 ## Adquisición
 
-Captura al menos tres productos con colores identificables. Fotografía uno de ellos con luz intensa y con luz tenue, manteniendo el encuadre y la distancia. Evita reflejos fuertes y usa un fondo sencillo. Guarda las fotografías originales en `imagenes/`, en formato JPG o PNG. Registra el producto, el dispositivo y las condiciones de iluminación de cada captura.
+Captura al menos tres productos con colores identificables. Fotografía uno de ellos con luz intensa y con luz tenue, manteniendo el encuadre y la distancia. Evita reflejos fuertes y usa un fondo sencillo. Guarda las fotografías de esta práctica en `practica1/imagenes/`, en formato JPG o PNG. Registra el producto, el dispositivo y las condiciones de iluminación de cada captura.
 
 ## Ejecución
 
@@ -39,7 +51,7 @@ La segmentación selecciona los píxeles dentro de los rangos HSV y aplica la m�
 
 ## Entregables generados
 
-Cada fotografía tiene su propia carpeta dentro de `resultados/`, con las representaciones, histogramas, máscara y segmentación. Las matrices RGB y HSV se guardan como archivos `.npy`. `resumen.csv` reúne las dimensiones, profundidad de la representación cargada, tamaños y porcentaje segmentado.
+Cada fotografía tiene su propia carpeta dentro de `practica1/resultados/`, con las representaciones, histogramas, máscara y segmentación. Las matrices RGB y HSV se guardan como archivos `.npy`. `resumen.csv` reúne las dimensiones, profundidad de la representación cargada, tamaños y porcentaje segmentado.
 
 ## Estado de las fotografías y pendientes de adquisición
 
