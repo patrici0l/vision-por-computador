@@ -4,7 +4,7 @@
 Construir un flujo reproducible de análisis, preprocesamiento y segmentación de imágenes de productos y escenas de compra.
 
 ## Estado del dataset propio
-El conjunto contiene **121 imágenes JPEG listas para OpenCV**: 50 fotos de productos individuales en 11 clases provisionales y 71 escenas de estantes.
+El conjunto contiene **121 imágenes JPEG listas para OpenCV**: 50 fotos de productos individuales en 10 clases de productos y 71 escenas de estantes.
 
 - `data/propio/imagenes/`: única carpeta de trabajo con las 121 imágenes. Los nombres indican tipo, categoría y número correlativo.
 - `data/propio/fuentes_heic/`: conserva las 71 capturas HEIC originales de las escenas. Cada una comparte el mismo nombre base con su JPEG.

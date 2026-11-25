@@ -120,5 +120,35 @@ Cada fase fija los ganadores de la anterior (la Fase 1 usa $L_1 = L_2 = L_3 = 16
 | Enfoque | Cálculo de Combinaciones | Corridas Evaluadas | Corridas Reales Ejecutadas |
 | :--- | :--- | :---: | :---: |
 | **Búsqueda Completa (Fuerza Bruta)** | $8 \times 4 \times 2 \times 2 \times 6^3 \times 4^3$ | $1.769.472$ | $1.769.472$ |
-| **Nuestro Spike por Fases** | $128\text{ (F1)} + 216\text{ (F2)} + 64\text{ (F3)} + 9\text{ (Semillas)}$ | **$417$** | **$305$** *(con historial en F1)* |
+| **Nuestro Spike por Fases (RN)** | $128\text{ (F1)} + 216\text{ (F2)} + 64\text{ (F3)} + 9\text{ (Semillas)}$ | **$417$** | **$305$** *(con historial en F1)* |
 | **Reducción lograda** | Factor de reducción: **$5.801\times$ menos entrenamientos** | $99{,}98\%$ menos | Viable dentro del *time-box* de 1 semana |
+
+---
+
+## Alineación del Spike con la Guía Oficial del Proyecto Integrador
+
+Al revisar **[Guia Proyecto Integrador (1).docx](../../Material%20Clases/Guia%20Proyecto%20Integrador%20(1).docx)**, el proyecto se divide en **Entrega 1 (Fases 1 y 2: Visión Clásica)** y **Entrega 2 (Fases 3, 4 y 5: Reconocimiento y Aprendizaje Profundo)**. Así se aplica nuestra metodología de **Spike por Fases** a cada exigencia de la guía y su rúbrica:
+
+### 1. Cómo se aplica el Spike a las Fases de la Entrega 1 (Preprocesamiento y Segmentación Clásica)
+La rúbrica de la Entrega 1 exige *"comparar alternativas (media, mediana, Gaussiano; ecualización global vs. adaptativa) con evidencia"* (4 pts) y *"combinar umbralización, morfología, bordes (Canny) y contornos para recortar productos y evaluar contra anotaciones con IoU o Dice"* (4 pts). Aplicamos el mismo **Spike secuencial** en 3 fases sobre OpenCV:
+
+| Fase del Spike | Punto de la Guía Oficial | Responsable | Qué se varía (Espacio de búsqueda clásico) | Qué se deja FIJO | Corridas |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **Fase 0: Datos y Split** | **1.2, 1.3, 2.1, 2.3 y 2.4**<br>*(Limpieza, anotación, split 70/15/15 y augmentation)* | **Patricio Lucero (PM)** | - Unificación de 10 clases (121 fotos)<br>- Split `85 train / 18 val / 18 test`<br>- Máscaras de referencia (*ground truth*)<br>- Augmentation (luz, rotación, escala, oclusión, blur) solo en `train` | Semilla `SEED = 42`, entrada normalizada | **1–3** |
+| **Fase 1: Preprocesamiento** | **1.4 y 2.2**<br>*(Espacios de color, ecualización y reducción de ruido)* | **Fernando Mejia** | - **Contraste (4):** `Sin ecualizar, Global, CLAHE (clip=2.0), CLAHE (clip=3.0)`<br>- **Filtro (3):** `Media, Mediana, Gaussiano`<br>- **Kernel filtro (3):** `3×3, 5×5, 7×7` | Umbral HSV/Otsu base y Morfología Elipse `5×5` (1 iter.) | **36** |
+| **Fase 2: Segmentación y Bordes** | **2.5 (Parte A)**<br>*(Umbralización y detección de bordes Canny)* | **Bryam Mejia** | - **Método umbral (3):** `HSV color, Otsu canal S, Adaptativo`<br>- **Saturación/Umbral (4):** `S_min ∈ [30, 50, 70, 90]`<br>- **Canny `(t1, t2)` (4):** `(30,100), (50,150), (70,180), (90,220)` | **Ganadores Fase 1** (mejor contraste + mejor filtro) y Morfología base | **48** |
+| **Fase 3: Morfología y Contornos** | **2.5 (Parte B)**<br>*(Operaciones morfológicas, recorte y evaluación Dice/IoU)* | **Erick Salinas** | - **Forma kernel (3):** `Rectángulo, Elipse, Cruz`<br>- **Tamaño kernel (4):** `3×3, 5×5, 7×7, 9×9`<br>- **Operación/Iter. (3):** `Apertura(1)+Cierre(1), Apertura(1)+Cierre(2), Apertura(2)+Cierre(2)` | **Ganadores Fase 1** + **Ganadores Fase 2** | **36 + Test** |
+
+> **Total Spike Clásico (Entrega 1):** **$36 + 48 + 36 = 120\text{ corridas}$** (en lugar de $36 \times 48 \times 36 = 62.208$ combinaciones), evaluadas con **`Dice`** y **`Match Shape`** sobre validación y cerradas en `test`.
+
+---
+
+### 2. Cómo se conecta con las Fases de la Entrega 2 (Reconocimiento y Aprendizaje Profundo)
+En la **Entrega 2**, la guía oficial pide en las **Fases 3 y 4** entrenar clasificadores/redes de detección y segmentación alcanzando **`Dice ≥ 0.7`** y comparando configuraciones con métricas verificables:
+
+1. **Insumo directo desde la Entrega 1:** Los recortes de productos y el split `85 train | 18 val | 18 test` (con el preprocesamiento ganador de la Fase 1 clásica: `CLAHE + Filtro ganador`) alimentan directamente la Red Neuronal.
+2. **Aplicación del Spike de Red Neuronal (`305 corridas reales`):**
+   - **Fernando (Fase 1 — `128 → 16 corridas`):** Ajusta la compilación y convergencia (`épocas`, `batch_size`, `optimizador`, `kernel`).
+   - **Bryam (Fase 2 — `216 corridas`):** Ajusta la capacidad de representación de las capas (`L1, L2, L3`).
+   - **Erick (Fase 3 — `64 + 9 corridas`):** Ajusta la regularización (`Dropout d1, d2, d3`), verifica estabilidad con 3 semillas y evalúa una sola vez en `test` para cumplir el objetivo de la rúbrica (`Dice ≥ 0.7`).
+3. **Comparación exigida en Fase 5.4 de la Guía:** La rúbrica otorga el puntaje máximo (100 %) por *"comparar el enfoque clásico con el de aprendizaje profundo mediante métricas (`Dice` y `ACC`)"*, lo cual queda resuelto al tener ambos pipelines optimizados con la misma métrica y sobre la misma partición `85 / 18 / 18`.
